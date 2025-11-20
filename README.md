@@ -28,6 +28,10 @@ Just run the following command:
 docker compose up
 ```
 
+Once running, the SwarmIT dashboard is available at http://localhost:8001, the
+PyDotBot main interface is available at http://localhost:8000/PyDotBot and the
+pin QR code is available at http://localhost:8000/pin
+
 ### Advanced configuration
 
 By default, the SwarmIT and PyDotBot use the internal mosquitto broker but if

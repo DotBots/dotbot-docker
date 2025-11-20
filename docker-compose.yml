@@ -1,6 +1,6 @@
 services:
   pydotbot:
-    image: pydotbot:latest
+    image: aabadie/pydotbot:latest
     container_name: pydotbot
     restart: unless-stopped
     user: 0:0
@@ -20,7 +20,7 @@ services:
       - FRONTEND_BASE_URL
   
   swarmit:
-    image: swarmit:latest
+    image: aabadie/swarmit:latest
     container_name: swarmit
     restart: unless-stopped
     user: 0:0

@@ -1,0 +1,43 @@
+services:
+  pydotbot:
+    image: pydotbot:latest
+    container_name: pydotbot
+    restart: unless-stopped
+    user: 0:0
+    depends_on:
+      - mosquitto
+    ports:
+      - "8000:8000"
+      - "8080:8080"
+    environment:
+      - CLOUD_MQTT_HOST
+      - CLOUD_MQTT_PORT
+      - MQTT_HOST
+      - MQTT_PORT
+      - MQTT_WS_PORT
+      - MQTT_USE_SSL
+      - PIN_CODE_REFRESH_INTERVAL
+      - FRONTEND_BASE_URL
+  
+  swarmit:
+    image: swarmit:latest
+    container_name: swarmit
+    restart: unless-stopped
+    user: 0:0
+    depends_on:
+      - mosquitto
+    ports:
+      - "8001:8001"
+    environment:
+      - CLOUD_MQTT_HOST
+      - CLOUD_MQTT_PORT
+
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    restart: unless-stopped
+    user: 0:0
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto:/mosquitto/config

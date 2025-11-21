@@ -1,16 +1,5 @@
 http://localhost:8000 {
 
-    @dashboard path /
-	handle @dashboard {
-		uri strip_prefix /
-		reverse_proxy http://swarmit:8001
-	}
-
-    @assets path /assets/*
-    handle @assets {
-        reverse_proxy http://swarmit:8001
-    }
-
     @pydotbot_root path /PyDotBot
     redir @pydotbot_root /PyDotBot/
 	@pydotbot path /PyDotBot/*
@@ -37,4 +26,49 @@ http://localhost:8000 {
 
 	@ws path /ws
 	reverse_proxy @ws http://pydotbot:8080
+
+    @dashboard path /
+	handle @dashboard {
+		reverse_proxy http://swarmit:8001
+	}
+
+    @dashboard_settings path /settings
+	handle @dashboard_settings {
+		reverse_proxy http://swarmit:8001
+	}
+
+    @dashboard_status path /status
+	handle @dashboard_status {
+		reverse_proxy http://swarmit:8001
+	}
+
+    @dashboard_start path /start
+	handle @dashboard_start {
+		reverse_proxy http://swarmit:8001
+	}
+
+    @dashboard_flash path /flash
+	handle @dashboard_flash {
+		reverse_proxy http://swarmit:8001
+	}
+
+    @dashboard_jwt path /issue_jwt
+	handle @dashboard_jwt {
+		reverse_proxy http://swarmit:8001
+	}
+
+    @dashboard_pkey path /public_key
+	handle @dashboard_pkey {
+		reverse_proxy http://swarmit:8001
+	}
+
+    @dashboard_rec path /records
+	handle @dashboard_rec {
+		reverse_proxy http://swarmit:8001
+	}
+
+    @assets path /assets/*
+    handle @assets {
+        reverse_proxy http://swarmit:8001
+    }
 }

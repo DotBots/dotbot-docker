@@ -18,19 +18,22 @@ services:
       - MQTT_USE_SSL
       - PIN_CODE_REFRESH_INTERVAL
       - FRONTEND_BASE_URL
-  
+
   swarmit:
     image: aabadie/swarmit:latest
     container_name: swarmit
     restart: unless-stopped
     depends_on:
       - mosquitto
+      - openssl
     expose:
       - "8001"
     environment:
       - CLOUD_MQTT_HOST
       - CLOUD_MQTT_PORT
       - CLOUD_NETWORK_ID
+    volumes:
+      - swarmit_data:/srv/.data
 
   mosquitto:
     image: eclipse-mosquitto:latest
@@ -58,6 +61,13 @@ services:
       - caddy_data:/data
       - caddy_config:/config
 
+  openssl:
+    image: aabadie/dotbot-openssl
+    restart: no
+    volumes:
+      - swarmit_data:/data
+
 volumes:
+  swarmit_data:
   caddy_data:
   caddy_config:

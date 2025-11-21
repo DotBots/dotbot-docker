@@ -11,6 +11,7 @@ services:
     environment:
       - CLOUD_MQTT_HOST
       - CLOUD_MQTT_PORT
+      - CLOUD_NETWORK_ID
       - MQTT_HOST
       - MQTT_PORT
       - MQTT_WS_PORT

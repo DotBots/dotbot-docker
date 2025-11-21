@@ -1,0 +1,40 @@
+http://localhost:8000 {
+
+    @dashboard path /
+	handle @dashboard {
+		uri strip_prefix /
+		reverse_proxy http://swarmit:8001
+	}
+
+    @assets path /assets/*
+    handle @assets {
+        reverse_proxy http://swarmit:8001
+    }
+
+    @pydotbot_root path /PyDotBot
+    redir @pydotbot_root /PyDotBot/
+	@pydotbot path /PyDotBot/*
+	handle @pydotbot {
+		reverse_proxy http://pydotbot:8000
+	}
+
+    @pin_root path /pin
+    redir @pin_root /pin/
+	@pin path /pin/*
+	handle @pin {
+		reverse_proxy http://pydotbot:8080
+	}
+
+	@qr_code path /pin_code/qr_code
+	handle @qr_code {
+		reverse_proxy http://pydotbot:8080
+	}
+
+	@pin_code path /pin_code
+	handle @pin_code {
+		reverse_proxy http://pydotbot:8080
+	}
+
+	@ws path /ws
+	reverse_proxy @ws http://pydotbot:8080
+}

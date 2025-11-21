@@ -3,12 +3,11 @@ services:
     image: aabadie/pydotbot:latest
     container_name: pydotbot
     restart: unless-stopped
-    user: 0:0
     depends_on:
       - mosquitto
-    ports:
-      - "8000:8000"
-      - "8080:8080"
+    expose:
+      - "8000"
+      - "8080"
     environment:
       - CLOUD_MQTT_HOST
       - CLOUD_MQTT_PORT
@@ -23,11 +22,10 @@ services:
     image: aabadie/swarmit:latest
     container_name: swarmit
     restart: unless-stopped
-    user: 0:0
     depends_on:
       - mosquitto
-    ports:
-      - "8001:8001"
+    expose:
+      - "8001"
     environment:
       - CLOUD_MQTT_HOST
       - CLOUD_MQTT_PORT
@@ -36,8 +34,28 @@ services:
     image: eclipse-mosquitto:latest
     container_name: mosquitto
     restart: unless-stopped
-    user: 0:0
     ports:
       - "1883:1883"
+      - "1884:1884"
     volumes:
-      - ./mosquitto:/mosquitto/config
+      - ./mosquitto:/mosquitto/config:ro
+
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    depends_on:
+      - pydotbot
+      - swarmit
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

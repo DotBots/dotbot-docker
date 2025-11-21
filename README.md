@@ -28,7 +28,7 @@ Just run the following command:
 docker compose up
 ```
 
-Once running, the SwarmIT dashboard is available at http://localhost:8001, the
+Once running, the SwarmIT dashboard is available at http://localhost:8000, the
 PyDotBot main interface is available at http://localhost:8000/PyDotBot and the
 pin QR code is available at http://localhost:8000/pin
 
